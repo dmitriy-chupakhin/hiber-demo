@@ -11,8 +11,9 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Long> {
     @Query(value = "select client_id, id, product_id from " +
-            "(select *, row_number() over (partition by client_id) as i from test.orders where client_id in :list) as o " +
+            "(select *, row_number() over (partition by client_id) as i from test.orders where client_id in :ids) as o " +
             "where i <= :rowcount ;",
             nativeQuery = true)
-    List<Order> findAllByClientIdIn(@Param("list") Iterable<Long> list, @Param("rowcount") int count);
+    List<Order> findAllByClientIdIn(@Param("ids") Iterable<Long> ids, @Param("rowcount") int count);
+
 }

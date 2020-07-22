@@ -29,5 +29,20 @@ public class HomeController {
 
         // способ 2, используя репозиторий
         return repository.findAllByClientIdIn(ids, rowcount);
+
+        // способ 3, используя Criteria
+//        List<Order> resultList = new ArrayList<>();
+//        CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
+//        CriteriaQuery<Order> criteria = criteriaBuilder.createQuery(Order.class);
+//        Root<Order> root = criteria.from(Order.class);
+//
+//        for (Long id : ids) {
+//            List<Order> list = manager.createQuery(criteria
+//                    .select(root)
+//                    .where(root.get("clientId").in(id))).setMaxResults(rowcount).getResultList();
+//            resultList.addAll(list);
+//        }
+//
+//        return resultList;
     }
 }
