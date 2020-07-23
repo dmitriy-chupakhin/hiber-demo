@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import ru.dchupakhin.hiberdemo.entity.Order;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Long> {
@@ -14,6 +15,6 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
             "(select *, row_number() over (partition by client_id) as i from test.orders where client_id in :ids) as o " +
             "where i <= :rowcount ;",
             nativeQuery = true)
-    List<Order> findAllByClientIdIn(@Param("ids") Iterable<Long> ids, @Param("rowcount") int count);
+    Optional<List<Order>> findAllByClientIdIn(@Param("ids") Iterable<Long> ids, @Param("rowcount") int count);
 
 }
